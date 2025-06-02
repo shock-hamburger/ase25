@@ -3,7 +3,7 @@
 ## Setup
 
 ```shell
-wget https://github.com/shock-hamburger/ase25/diff/scripts/setup.sh?raw=true -O /tmp/setup.sh
+wget 'https://github.com/shock-hamburger/ase25/blob/master/diff/scripts/setup.sh?raw=true' -O /tmp/setup.sh
 chmod +x /tmp/setup.sh
 /tmp/setup.sh
 ```
