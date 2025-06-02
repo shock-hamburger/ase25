@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 REPO_NAME="ase25"
 
@@ -92,62 +92,74 @@ mkdir -p /tmp/DevCovDiff-toolchains/
 
 # LLVM
 
-mkdir -p $DIFF_WORKDIR/.build-llvm/src/
-mkdir -p $DIFF_WORKDIR/.build-llvm/build/
+if [[ ! -d $DIFF_WORKDIR/.build-llvm/install/ ]]; then
 
-cd $DIFF_WORKDIR/.build-llvm/src/
-git init
-git checkout -b DevCovDiff
-git remote add origin https://github.com/shock-hamburger/llvm-project.git
-git pull origin DevCovDiff --depth=10
+    rm -rf $DIFF_WORKDIR/.build-llvm/
 
-cd $DIFF_WORKDIR/.build-llvm/build/
+    mkdir -p $DIFF_WORKDIR/.build-llvm/src/
+    mkdir -p $DIFF_WORKDIR/.build-llvm/build/
 
-# Or RelWithDebInfo
-# Always use GCC under /usr/bin/
-cmake -GNinja -DCMAKE_BUILD_TYPE="Release"                                \
-              -DCMAKE_C_FLAGS="-pipe"                                     \
-              -DCMAKE_CXX_FLAGS="-pipe"                                   \
-              -DCMAKE_C_COMPILER="/usr/bin/gcc"                           \
-              -DCMAKE_CXX_COMPILER="/usr/bin/g++"                         \
-              -DLLVM_TARGETS_TO_BUILD="X86"                               \
-              -DLLVM_ENABLE_ASSERTIONS="OFF"                              \
-              -DLLVM_ENABLE_PROJECTS="clang;lld"                          \
-              -DLLVM_USE_LINKER="mold"                                    \
-              -DLLVM_ENABLE_RUNTIMES="compiler-rt"                        \
-              -DLLVM_PARALLEL_LINK_JOBS="2"                               \
-              -DCMAKE_EXPORT_COMPILE_COMMANDS="ON"                        \
-              -DCMAKE_INSTALL_PREFIX="$DIFF_WORKDIR/.build-llvm/install/" \
-              $DIFF_WORKDIR/.build-llvm/src/llvm
-ninja -j$(nproc) install
+    cd $DIFF_WORKDIR/.build-llvm/src/
+    git init
+    git checkout -b DevCovDiff
+    git remote add origin https://github.com/shock-hamburger/llvm-project.git
+    git pull origin DevCovDiff --depth=10
+
+    cd $DIFF_WORKDIR/.build-llvm/build/
+
+    # Or RelWithDebInfo
+    # Always use GCC under /usr/bin/
+    cmake -GNinja -DCMAKE_BUILD_TYPE="Release"                                 \
+                  -DCMAKE_C_FLAGS="-pipe"                                      \
+                  -DCMAKE_CXX_FLAGS="-pipe"                                    \
+                  -DCMAKE_C_COMPILER="/usr/bin/gcc"                            \
+                  -DCMAKE_CXX_COMPILER="/usr/bin/g++"                          \
+                  -DLLVM_TARGETS_TO_BUILD="X86"                                \
+                  -DLLVM_ENABLE_ASSERTIONS="OFF"                               \
+                  -DLLVM_ENABLE_PROJECTS="clang;lld"                           \
+                  -DLLVM_USE_LINKER="mold"                                     \
+                  -DLLVM_ENABLE_RUNTIMES="compiler-rt"                         \
+                  -DLLVM_PARALLEL_LINK_JOBS="2"                                \
+                  -DCMAKE_EXPORT_COMPILE_COMMANDS="ON"                         \
+                  -DCMAKE_INSTALL_PREFIX="$DIFF_WORKDIR/.build-llvm/install/"  \
+                  $DIFF_WORKDIR/.build-llvm/src/llvm
+    ninja -j$(nproc) install
+
+fi
 
 # GCC
 
-sudo apt -yq install libmpc-dev
+if [[ ! -d $DIFF_WORKDIR/.build-gcc/install/ ]]; then
 
-mkdir -p $DIFF_WORKDIR/.build-gcc/src/
-mkdir -p $DIFF_WORKDIR/.build-gcc/build/
+    sudo apt -yq install libmpc-dev
 
-cd $DIFF_WORKDIR/.build-gcc/src/
-git init
-git checkout -b DevCovDiff
-git remote add origin https://github.com/shock-hamburger/gcc.git
-git pull origin DevCovDiff --depth=10
-cd $DIFF_WORKDIR/.build-gcc/build/
-# Always use GCC under /usr/bin/
-../src/configure CC=/usr/bin/gcc CXX=/usr/bin/g++                         \
-                 --prefix=$(realpath ../install)                          \
-                 --enable-languages=c,c++                                 \
-                 --enable-libstdcxx-debug                                 \
-                 --enable-libstdcxx-backtrace                             \
-                 --disable-bootstrap                                      \
-                 --disable-multilib                                       \
-                 --disable-libvtv                                         \
-                 --with-system-zlib                                       \
-                 --without-isl                                            \
-                 --enable-multiarch
-make -j$(nproc)
-make install
+    rm -rf $DIFF_WORKDIR/.build-gcc/
+
+    mkdir -p $DIFF_WORKDIR/.build-gcc/src/
+    mkdir -p $DIFF_WORKDIR/.build-gcc/build/
+
+    cd $DIFF_WORKDIR/.build-gcc/src/
+    git init
+    git checkout -b DevCovDiff
+    git remote add origin https://github.com/shock-hamburger/gcc.git
+    git pull origin DevCovDiff --depth=10
+    cd $DIFF_WORKDIR/.build-gcc/build/
+    # Always use GCC under /usr/bin/
+    ../src/configure CC=/usr/bin/gcc CXX=/usr/bin/g++                          \
+                     --prefix=$(realpath ../install)                           \
+                     --enable-languages=c,c++                                  \
+                     --enable-libstdcxx-debug                                  \
+                     --enable-libstdcxx-backtrace                              \
+                     --disable-bootstrap                                       \
+                     --disable-multilib                                        \
+                     --disable-libvtv                                          \
+                     --with-system-zlib                                        \
+                     --without-isl                                             \
+                     --enable-multiarch
+    make -j$(nproc)
+    make install
+
+fi
 
 ### Pull scripts
 
