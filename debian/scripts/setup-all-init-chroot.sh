@@ -11,7 +11,7 @@ for INSTR_OPTION in "${INSTR_OPTION_LIST[@]}"; do
     if ! schroot -l 2>/dev/null |\
          grep -q "chroot:$SBUILD_DISTRO-amd64-sbuild-$INSTR_OPTION"; then
 
-        INSTR_OPTION=$INSTR_OPTION SBUILD_DISTRO=$SBUILD_DISTRO ./setup-init-chroot.sh
+        INSTR_OPTION=$INSTR_OPTION SBUILD_DISTRO=$SBUILD_DISTRO $THIS_DIR/setup-init-chroot.sh
         RET=$?
         if [[ $RET -ne 0 ]]; then
             echo "./setup-init-chroot.sh: $RET"
