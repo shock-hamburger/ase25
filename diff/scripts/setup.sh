@@ -74,13 +74,13 @@ sudo apt -yq install libxml2-utils
 # pip
 
 if lsb_release -a | grep 'Distributor ID:	Debian' >& /dev/null; then
-    pip_opts="--break-system-packages $pip_opts"
+    PIP_OPTS="--break-system-packages $PIP_OPTS"
 fi
 
-pip install $pip_opts colorama
-pip install $pip_opts pygments
-pip install $pip_opts numpy
-pip install $pip_opts editdistance
+pip install $PIP_OPTS colorama
+pip install $PIP_OPTS pygments
+pip install $PIP_OPTS numpy
+pip install $PIP_OPTS editdistance
 
 ### Create workdir
 
