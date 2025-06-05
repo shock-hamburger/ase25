@@ -8,9 +8,6 @@ echo
 
 ################################################################################
 
-# This is not needed without "nocheck"
-apt install distro-info-data
-
 echo
 
 LLVM_PROFILE_FILE="$(uuidgen).profraw" ./$EXECUTABLE
