@@ -9,7 +9,17 @@ echo
 ################################################################################
 
 echo
-./$EXECUTABLE $ARGS
+
+for i in `seq 7`; do
+    seq 1 40 | LLVM_PROFILE_FILE="$(uuidgen).profraw" ./$EXECUTABLE > /tmp/compressed
+done
+
+for i in `seq 3`; do
+    cat /tmp/compressed | LLVM_PROFILE_FILE="$(uuidgen).profraw" ./$EXECUTABLE2 > /dev/null
+done
+
+rm -f /tmp/compressed
+
 echo
 
 ################################################################################

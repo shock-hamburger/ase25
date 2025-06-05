@@ -81,9 +81,10 @@ if [[ "$INSTR_OPTION" == "clang-mcdc" || "$INSTR_OPTION" == "clang-scc" ]]; then
         if [[ -f $THIS_DIR/chroot/$1.sh ]]; then
             PACKAGE_SPECIFIC_SCRIPT=$1.sh
         else
-            PACKAGE_SPECIFIC_SCRIPT=default.sh
+            PACKAGE_SPECIFIC_SCRIPT=common/default.sh
         fi
         FINISHED_BUILD_HOOK="
+            PROJECT_ROOT=$PROJECT_ROOT       \\
             EXECUTABLE=$EXECUTABLE           \\
             EXECUTABLE2=$EXECUTABLE2         \\
             EXECUTABLE3=$EXECUTABLE3         \\
@@ -112,10 +113,10 @@ elif [[ "$INSTR_OPTION" == "gcc-mcdc" || "$INSTR_OPTION" == "gcc-gcov" ]]; then
         if [[ -f $THIS_DIR/chroot/$1.sh ]]; then
             PACKAGE_SPECIFIC_SCRIPT=$1.sh
         else
-            PACKAGE_SPECIFIC_SCRIPT=default.sh
+            PACKAGE_SPECIFIC_SCRIPT=common/default.sh
         fi
         FINISHED_BUILD_HOOK="
-            $CHROOT_HOOK_PREFIX/bin/gcov-common.sh;
+            $CHROOT_HOOK_PREFIX/bin/common/gcov-common.sh;
             PROJECT_ROOT=$PROJECT_ROOT       \\
             EXECUTABLE=$EXECUTABLE           \\
             EXECUTABLE2=$EXECUTABLE2         \\
@@ -243,7 +244,7 @@ else
     schroot -c $CHROOT_NAME                                                    \
             -u root                                                            \
             -d $BUILD_PATH                                                     \
-            -- sh -c "$CHROOT_HOOK_PREFIX/bin/cov-clean.sh"
+            -- sh -c "$CHROOT_HOOK_PREFIX/bin/common/clean-coverage.sh"
 
     if [[ $START_WITH == "build" ]]; then
 
