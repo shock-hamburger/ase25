@@ -25,10 +25,18 @@ cron)
     ARGS="--version"
     ;;
 curl)
+    STARTING_BUILD_HOOK="
+        $STARTING_BUILD_HOOK
+        apt install libcurl4
+    "
     EXECUTABLE="$PROJECT_ROOT/debian/build/src/.libs/curl"
     ARGS="ifconfig.me"
     ;;
 dbus)
+    STARTING_BUILD_HOOK="
+        $STARTING_BUILD_HOOK
+        apt install libdbus-1-3
+    "
     EXECUTABLE="$PROJECT_ROOT/debian/dbus-bin/usr/bin/dbus-uuidgen"
     ;;
 debianutils)
