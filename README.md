@@ -9,6 +9,9 @@ tested.
 Containers, other Linux distributions or operating systems or other architectures
 are never guaranteed to work.
 
+Caution: `sudo` are used in setup and test scripts. It is recommended to use
+one-off machines like CloudLab or virtual machines.
+
 ## Setup
 
 ```shell
@@ -17,7 +20,8 @@ chmod +x /tmp/setup.sh
 /tmp/setup.sh
 ```
 
-As prompted, log out the current shell and log back in again.
+As prompted, log out the current shell and log back in again, to make sure
+you are correctly in `sbuild` group.
 
 ## Test with Debian packages
 
