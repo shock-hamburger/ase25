@@ -15,7 +15,7 @@ if ! grep '### DebCovDiff' ~/.bashrc >& /dev/null; then
 
 ### DebCovDiff
 
-export DIFF_WORKDIR="$HOME/DevCovDiff"
+export DIFF_WORKDIR="$HOME/DebCovDiff"
 
 export PATH="$DIFF_WORKDIR/.build-gcc/install/bin:$PATH"
 export PATH="$DIFF_WORKDIR/.build-llvm/install/bin:$PATH"
@@ -30,7 +30,7 @@ if [[ -f ~/.zshrc ]]; then
 
 ### DebCovDiff
 
-export DIFF_WORKDIR="$HOME/DevCovDiff"
+export DIFF_WORKDIR="$HOME/DebCovDiff"
 
 export PATH="$DIFF_WORKDIR/.build-gcc/install/bin:$PATH"
 export PATH="$DIFF_WORKDIR/.build-llvm/install/bin:$PATH"
@@ -40,7 +40,7 @@ EOF
     fi
 fi
 
-export DIFF_WORKDIR="$HOME/DevCovDiff"
+export DIFF_WORKDIR="$HOME/DebCovDiff"
 
 export PATH="$DIFF_WORKDIR/.build-gcc/install/bin:$PATH"
 export PATH="$DIFF_WORKDIR/.build-llvm/install/bin:$PATH"
@@ -88,7 +88,7 @@ mkdir -p $DIFF_WORKDIR
 
 ### Get LLVM and GCC (build both with stable GCC from the distro)
 
-mkdir -p /tmp/DevCovDiff-toolchains/
+mkdir -p /tmp/DebCovDiff-toolchains/
 
 # LLVM
 
@@ -101,9 +101,9 @@ if [[ ! -d $DIFF_WORKDIR/.build-llvm/install/ ]]; then
 
     cd $DIFF_WORKDIR/.build-llvm/src/
     git init
-    git checkout -b DevCovDiff
+    git checkout -b DebCovDiff
     git remote add origin https://github.com/shock-hamburger/llvm-project.git
-    git pull origin DevCovDiff --depth=10
+    git pull origin DebCovDiff --depth=10
 
     cd $DIFF_WORKDIR/.build-llvm/build/
 
@@ -140,9 +140,9 @@ if [[ ! -d $DIFF_WORKDIR/.build-gcc/install/ ]]; then
 
     cd $DIFF_WORKDIR/.build-gcc/src/
     git init
-    git checkout -b DevCovDiff
+    git checkout -b DebCovDiff
     git remote add origin https://github.com/shock-hamburger/gcc.git
-    git pull origin DevCovDiff --depth=10
+    git pull origin DebCovDiff --depth=10
     cd $DIFF_WORKDIR/.build-gcc/build/
     # Always use GCC under /usr/bin/
     ../src/configure CC=/usr/bin/gcc CXX=/usr/bin/g++                          \
