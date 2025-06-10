@@ -1,5 +1,14 @@
 # DebCovDiff
 
+The experiments are mainly run on a CloudLab c6420 physical server (amd64, see
+detailed specs in [CloudLab documentation](https://docs.cloudlab.us/hardware.html)),
+with an Ubuntu 22.04 image.
+
+Other Debian-based distributions and virtual machines should also work but less
+tested.
+Containers, other Linux distributions or operating systems or other architectures
+are never guaranteed to work.
+
 ## Setup
 
 ```shell
