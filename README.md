@@ -33,7 +33,7 @@ $DIFF_WORKDIR/ase25/diff/scripts/debian-diff.sh grep
 
 Options:
 
-- `distro-info`: Debian package name
+- `grep`: Debian package name
 - `LOG_LEVEL=<level>`: one of `error`, `warning`, `info`, `debug`
 - `SHOW_SOURCE=1`: show problematic source code snippet
 - `ALL_METRICS=1`: warn of inconsistency for all metrics. Otherwise this is
@@ -52,6 +52,6 @@ Options:
 Run all packages
 
 ```shell
-$DIFF_WORKDIR/enhanced-gcov/diff/scripts/debian-batch.sh
-$DIFF_WORKDIR/enhanced-gcov/diff/scripts/debian-post-batchrun.sh
+$DIFF_WORKDIR/ase25/diff/scripts/debian-batch.sh
+$DIFF_WORKDIR/ase25/diff/scripts/debian-post-batchrun.sh
 ```
