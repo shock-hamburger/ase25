@@ -30,7 +30,7 @@ ALL_METRICS=1 \
 LOG_LEVEL=warning \
 SHOW_SOURCE=1 \
 START_WITH="download_source" \
-$DIFF_WORKDIR/ase25/diff/scripts/debian-diff.sh distro-info
+$DIFF_WORKDIR/ase25/diff/scripts/debian-diff.sh grep
 ```
 
 Options:
